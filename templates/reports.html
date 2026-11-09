@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CerebroIQ - Reports</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #0b1120;
+            color: #e5e7eb;
+        }
+
+        .sidebar {
+            position: fixed;
+            width: 250px;
+            top: 0;
+            bottom: 0;
+            background: #111827;
+            padding: 25px 15px;
+            border-right: 1px solid #263244;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #60a5fa;
+            padding: 0 15px 30px;
+        }
+
+        .logo span {
+            color: white;
+        }
+
+        .menu-title {
+            color: #64748b;
+            font-size: 11px;
+            padding: 0 15px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .nav-item {
+            display: block;
+            text-decoration: none;
+            color: #94a3b8;
+            padding: 13px 15px;
+            margin: 4px 0;
+            border-radius: 8px;
+        }
+
+        .nav-item:hover,
+        .active {
+            background: #1d4ed8;
+            color: white;
+        }
+
+        .main {
+            margin-left: 250px;
+            padding: 40px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        .report {
+            background: #111827;
+            border: 1px solid #263244;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .report h2 {
+            margin-top: 0;
+            color: #60a5fa;
+        }
+
+        .report-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #263244;
+        }
+
+        .label {
+            color: #94a3b8;
+        }
+
+        .value {
+            font-weight: bold;
+        }
+
+        .stroke {
+            color: #f87171;
+        }
+
+        .normal {
+            color: #4ade80;
+        }
+
+        .empty {
+            color: #64748b;
+            text-align: center;
+            padding: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+
+    <div class="logo">
+        Cerebro<span>IQ</span>
+    </div>
+
+    <div class="menu-title">Main Menu</div>
+
+    <a href="/dashboard" class="nav-item">Dashboard</a>
+    <a href="/analyze" class="nav-item">Analyze Scan</a>
+    <a href="/history" class="nav-item">Patient History</a>
+    <a href="/reports" class="nav-item active">Reports</a>
+
+    <div class="menu-title" style="margin-top:25px;">System</div>
+
+    <a href="/settings" class="nav-item">Settings</a>
+    <a href="/help" class="nav-item">Help & Support</a>
+
+</aside>
+
+
+<main class="main">
+
+    <h1>Reports</h1>
+
+    <p class="subtitle">
+        Generated screening reports from previous analyses
+    </p>
+
+    {% if records %}
+
+        {% for record in records %}
+
+        <div class="report">
+
+            <h2>Screening Report</h2>
+
+            <div class="report-row">
+                <span class="label">CT Image</span>
+                <span class="value">{{ record[0] }}</span>
+            </div>
+
+            <div class="report-row">
+                <span class="label">Screening Result</span>
+
+                <span class="value {% if 'STROKE' in record[1] %}stroke{% else %}normal{% endif %}">
+                    {{ record[1] }}
+                </span>
+            </div>
+
+            <div class="report-row">
+                <span class="label">Confidence</span>
+                <span class="value">{{ record[2] }}%</span>
+            </div>
+
+            <div class="report-row">
+                <span class="label">Date</span>
+                <span class="value">{{ record[3] }}</span>
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="report empty">
+            No reports available yet.
+        </div>
+
+    {% endif %}
+
+</main>
+
+</body>
+</html>

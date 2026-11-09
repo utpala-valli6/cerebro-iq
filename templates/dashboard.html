@@ -1,0 +1,514 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CerebroIQ - Dashboard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #0b1120;
+            color: #e5e7eb;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            position: fixed;
+            width: 250px;
+            top: 0;
+            bottom: 0;
+            background: #111827;
+            padding: 28px 17px;
+            border-right: 1px solid #263244;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #60a5fa;
+            padding: 0 15px 45px;
+        }
+
+        .logo span {
+            color: white;
+        }
+
+        .menu-title {
+            color: #64748b;
+            font-size: 11px;
+            padding: 0 15px;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .nav-item {
+            display: block;
+            text-decoration: none;
+            color: #94a3b8;
+            padding: 13px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .nav-item:hover,
+        .active {
+            background: #1d4ed8;
+            color: white;
+        }
+
+        /* MAIN CONTENT */
+
+        .main {
+            margin-left: 250px;
+            min-height: 100vh;
+            padding: 35px 45px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 22px;
+            border-bottom: 1px solid #263244;
+        }
+
+        .topbar h1 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        .status {
+            color: #4ade80;
+            font-size: 13px;
+        }
+
+        /* HERO SECTION */
+
+        .hero {
+            min-height: 460px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            align-items: center;
+            gap: 30px;
+            padding: 35px 0;
+        }
+
+        .hero-content {
+            max-width: 570px;
+        }
+
+        .eyebrow {
+            color: #60a5fa;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .hero h2 {
+            font-size: clamp(32px, 3.2vw, 46px);
+            line-height: 1.2;
+            color: #f8fafc;
+            margin: 20px 0;
+        }
+
+        .hero h2 span {
+            color: #60a5fa;
+        }
+
+        .hero p {
+            color: #94a3b8;
+            font-size: 15px;
+            line-height: 1.9;
+            max-width: 500px;
+        }
+
+        .action {
+            display: inline-block;
+            margin-top: 22px;
+            padding: 15px 25px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .action:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .secondary-text {
+            display: block;
+            margin-top: 18px;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        /* RIGHT VISUAL */
+
+        .visual-area {
+            position: relative;
+            min-height: 390px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .visual-card {
+            position: relative;
+            width: 100%;
+            max-width: 390px;
+            height: 340px;
+            border: 1px solid #263b56;
+            border-radius: 20px;
+            background:
+                radial-gradient(ellipse at center, #17365a 0%, #102039 42%, #111827 80%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .visual-card::before,
+        .visual-card::after {
+            content: "";
+            position: absolute;
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            border-radius: 50%;
+        }
+
+        .visual-card::before {
+            width: 270px;
+            height: 270px;
+        }
+
+        .visual-card::after {
+            width: 210px;
+            height: 210px;
+        }
+
+        .brain-illustration {
+            position: relative;
+            z-index: 2;
+            width: 175px;
+            height: 195px;
+            filter: drop-shadow(0 0 18px rgba(96, 165, 250, 0.35));
+        }
+
+        .scan-line {
+            position: absolute;
+            z-index: 3;
+            width: 75%;
+            height: 1px;
+            background: #60a5fa;
+            opacity: 0.6;
+            box-shadow: 0 0 12px #60a5fa;
+            animation: scan 4s ease-in-out infinite;
+        }
+
+        @keyframes scan {
+            0%, 100% {
+                top: 20%;
+            }
+            50% {
+                top: 80%;
+            }
+        }
+
+        .visual-label {
+            position: absolute;
+            bottom: 18px;
+            left: 20px;
+            z-index: 4;
+            color: #bfdbfe;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        .floating-info {
+            position: absolute;
+            z-index: 5;
+            right: -10px;
+            bottom: 22px;
+            background: #17243a;
+            border: 1px solid #334c6b;
+            border-radius: 10px;
+            padding: 14px 17px;
+            width: 175px;
+        }
+
+        .floating-info small {
+            color: #94a3b8;
+            font-size: 11px;
+        }
+
+        .floating-info h3 {
+            color: #60a5fa;
+            font-size: 14px;
+            margin: 7px 0 0;
+        }
+
+        /* WORKFLOW */
+
+        .workflow {
+            border-top: 1px solid #263244;
+            border-bottom: 1px solid #263244;
+            padding: 23px 0;
+            margin-top: 5px;
+        }
+
+        .workflow-title {
+            color: #64748b;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #172b47;
+            color: #60a5fa;
+            font-size: 13px;
+            border: 1px solid #29476b;
+        }
+
+        .step h4 {
+            margin: 0 0 5px;
+            font-size: 13px;
+            color: #e2e8f0;
+        }
+
+        .step p {
+            margin: 0;
+            color: #64748b;
+            font-size: 11px;
+        }
+
+        /* DISCLAIMER */
+
+        .disclaimer {
+            margin-top: 25px;
+            color: #64748b;
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1050px) {
+            .main {
+                padding: 30px;
+            }
+
+            .hero {
+                grid-template-columns: 1fr 0.85fr;
+                gap: 15px;
+            }
+
+            .floating-info {
+                right: 0;
+            }
+        }
+
+        @media (max-width: 750px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .logo {
+                padding-bottom: 20px;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 25px;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 35px 0;
+            }
+
+            .visual-area {
+                min-height: 360px;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+
+    <div class="logo">
+        Cerebro<span>IQ</span>
+    </div>
+
+    <div class="menu-title">MAIN MENU</div>
+
+    <a href="/dashboard" class="nav-item active">Dashboard</a>
+    <a href="/analyze" class="nav-item">Analyse Scan</a>
+    <a href="/history" class="nav-item">Patient History</a>
+    <a href="/reports" class="nav-item">Reports</a>
+
+    <div class="menu-title" style="margin-top:30px;">SYSTEM</div>
+
+    <a href="/settings" class="nav-item">Settings</a>
+    <a href="/help" class="nav-item">Help & Support</a>
+
+</aside>
+
+<main class="main">
+
+    <header class="topbar">
+        <h1>Dashboard</h1>
+        <div class="status">● System Online</div>
+    </header>
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="eyebrow">
+                WELCOME TO CEREBROIQ
+            </div>
+
+            <h2>
+                Intelligent Brain<br>
+                <span>CT Image Analysis</span>
+            </h2>
+
+            <p>
+                Explore AI-assisted brain stroke screening
+                through deep learning. Upload a brain CT image
+                and view the model's analysis results through
+                a simple screening workflow.
+            </p>
+
+            <a href="/analyze" class="action">
+                Analyse CT Scan &nbsp; →
+            </a>
+
+            <span class="secondary-text">
+                Educational and research prototype
+            </span>
+
+        </div>
+
+        <div class="visual-area">
+
+            <div class="visual-card">
+
+                <div class="scan-line"></div>
+
+                <!-- Decorative brain illustration -->
+                <svg class="brain-illustration"
+                     viewBox="0 0 180 200"
+                     fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+
+                    <path d="M89 24
+                    C69 8 44 20 43 44
+                    C20 47 16 77 32 91
+                    C18 111 30 139 51 143
+                    C49 166 70 180 89 166
+                    Z"
+                    stroke="#93C5FD"
+                    stroke-width="3"
+                    stroke-linecap="round"/>
+
+                    <path d="M91 24
+                    C111 8 136 20 137 44
+                    C160 47 164 77 148 91
+                    C162 111 150 139 129 143
+                    C131 166 110 180 91 166
+                    Z"
+                    stroke="#93C5FD"
+                    stroke-width="3"
+                    stroke-linecap="round"/>
+
+                    <path d="M90 25 V168
+                    M44 48 C60 45 69 60 64 73
+                    M31 91 C49 83 61 96 58 111
+                    M51 143 C68 130 81 145 89 158
+                    M136 48 C120 45 111 60 116 73
+                    M149 91 C131 83 119 96 122 111
+                    M129 143 C112 130 99 145 91 158"
+                    stroke="#60A5FA"
+                    stroke-width="2"
+                    stroke-linecap="round"/>
+
+                    <circle cx="90" cy="96" r="5"
+                    fill="#38BDF8"/>
+
+                    <circle cx="64" cy="73" r="3"
+                    fill="#60A5FA"/>
+
+                    <circle cx="116" cy="73" r="3"
+                    fill="#60A5FA"/>
+
+                </svg>
+
+                <div class="visual-label">
+                    BRAIN IMAGING • ILLUSTRATION
+                </div>
+
+            </div>
+
+            <div class="floating-info">
+                <small>ANALYSIS PLATFORM</small>
+                <h3>Deep Learning</h3>
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <div class="disclaimer">
+        CerebroIQ is an educational and research prototype.
+        Its output is not a medical diagnosis and should not
+        replace evaluation by a qualified healthcare professional.
+    </div>
+
+</main>
+
+</body>
+</html>
